@@ -1,0 +1,12 @@
+Package: python-backports.shutil-which
+Version: 3.5.1
+Description: Backport of shutil.which from Python3
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core
+OE: python-backports.shutil-which
+License: PSF
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/minrk/backports.shutil_which
