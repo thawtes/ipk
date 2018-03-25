@@ -18,10 +18,9 @@ Example for python-iso3166
 
 ```sh
 $ cd build
-$ ../source/ipkg-build
 $ ../source/ipkg-build ../source/python-iso3166/
-
-$ gpg --detach-sign --armor build/python-iso3166_0.8_all.ipk
+sha256sum *.ipk > sha256sum.txt
+sha256sum -c sha256sum.txt
 ```
 
 source of the ipkg-build file
