@@ -1,0 +1,12 @@
+Package: python-socks
+Version: 1.6.8
+Description: A SOCKS proxy client and wrapper for Python.
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core
+OE: python-socks
+License: BSD
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/Anorov/PySocks
