@@ -1,0 +1,12 @@
+Package: python-iso639
+Version: 0.4.5
+Description: Python library for ISO 639 standard
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core
+OE: python-iso639
+License: AGPLv3
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/noumar/iso639
