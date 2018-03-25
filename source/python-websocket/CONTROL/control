@@ -1,0 +1,12 @@
+Package: python-websocket
+Version: 0.47.0
+Description: websocket client for python
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core
+OE: python-websocket
+License: LGPL
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/websocket-client/websocket-client
