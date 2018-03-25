@@ -1,0 +1,12 @@
+Package: python-backports.shutil-get-terminal-size
+Version: 1.0.0
+Description: Backport of the get_terminal_size function from Python 3 shutil.
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core
+OE: python-backports.shutil-get-terminal-size
+License: MIT
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/chrippa/backports.shutil_get_terminal_size
