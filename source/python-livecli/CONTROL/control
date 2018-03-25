@@ -1,0 +1,12 @@
+Package: python-livecli
+Version: 3.6.0
+Description: pipes videos from online streaming services to a variety of video players.
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core, python-backports.shutil-get-terminal-size, python-backports.shutil-which, python-futures, python-iso3166, python-iso639, python-pycrypto, python-requests, python-singledispatch, python-socks, python-websocket
+OE: python-livecli
+License: BSD 2-Clause Simplified License
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/livecli/livecli
