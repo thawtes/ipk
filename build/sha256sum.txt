@@ -1,3 +1,4 @@
+9717dd6126ba0ae81d9f446f15c4b901fd97963c48621bf6b6b8474c42f4b786  python-backports.shutil-get-terminal-size_1.0.0_all.ipk
 1ead1bf0e119cab2af9fb6971f2e089e5b3017e98024cc0411777676dc897ec0  python-backports.shutil-which_3.5.1_all.ipk
 c1c64466d60bb2783e9122a5bcf1012b538871c26c250979908072ef603cd279  python-iso3166_0.8_all.ipk
 e52ae997fc409b019083466e7fc7950ec5ff00fe59b7f929a8fef81f334c687e  python-iso639_0.4.5_all.ipk
