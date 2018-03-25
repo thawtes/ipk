@@ -1,0 +1,12 @@
+Package: python-iso3166
+Version: 0.8
+Description: Standalone ISO 3166-1 country definitions
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core
+OE: python-iso3166
+License: MIT
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/deactivated/python-iso3166
