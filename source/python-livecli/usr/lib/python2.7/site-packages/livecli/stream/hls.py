@@ -210,16 +210,25 @@ class HLSStreamWorker(SegmentedStreamWorker):
         )
         cache_stream_name = cache.get("cache_stream_name", "best")
         cache_url = cache.get("cache_url")
+        self.logger.debug("Current stream_url: {0}".format(cache_url))
         self.logger.debug("Current stream_name: {0}".format(cache_stream_name))
         if not cache_url:
             # corrupt cache data, if more than one instance of streamlink
             # with the same stream_url (m3u8) and hls-session-reload is running
             # this is very rare and shouldn't be a problem
-            self.logger.warning("Missing cache data, hls-session-reload is now deactivated")
+            self.logger.warning("Missing cache data, hls-session-reload is now deactivated, a stream restart might help.")
             self.session_reload_time = int(time() + time())
             return
 
-        streams = self.session.streams(cache_url)
+        try:
+            streams = self.session.streams(cache_url)
+        except Exception as e:
+            streams = ""
+            self.logger.error(str(e))
+            self.logger.warning("something went wrong, hls-session-reload is now deactivated, a stream restart might help.")
+            self.session_reload_time = int(time() + time())
+            return
+
         if not streams:
             self.logger.debug("No stream found for hls-session-reload, stream might be offline.")
             return
