@@ -1,0 +1,12 @@
+Package: enigma2-livecli-server
+Version: 1.0.0
+Description: startup service for python-livecli
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core, python-livecli
+OE: enigma2-livecli-server
+License: BSD 2-Clause Simplified License
+Maintainer: livecli
+Homepage: https://github.com/livecli/ipk
+Source: https://github.com/livecli/livecli

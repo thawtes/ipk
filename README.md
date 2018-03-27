@@ -43,14 +43,21 @@ opkg install /tmp/python-socks_1.6.8_all.ipk
 wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-websocket_0.47.0_all.ipk
 opkg install /tmp/python-websocket_0.47.0_all.ipk
 
-wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-livecli_3.6.1_all.ipk
-opkg install /tmp/python-livecli_3.6.1_all.ipk
+wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-livecli_3.6.2_all.ipk
+opkg install /tmp/python-livecli_3.6.2_all.ipk
 ```
 
 _test livecli_
 
 ```
 livecli -l debug
+```
+
+Install the server service script, this will only work for a receiver with `init.d`
+
+```
+wget https://raw.githubusercontent.com/livecli/ipk/master/build/enigma2-livecli-server_1.0.0_all.ipk
+opkg install /tmp/enigma2-livecli-server_1.0.0_all.ipk
 ```
 
 _start the server_
