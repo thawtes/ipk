@@ -2,6 +2,7 @@ import re
 
 from livecli.plugin import Plugin
 from livecli.plugin.api import http
+from livecli.plugin.api import useragents
 from livecli.stream import HLSStream
 
 __livecli_docs__ = {
@@ -17,7 +18,6 @@ __livecli_docs__ = {
     "last_update": "2017-11-01",
 }
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 _url_re = re.compile(r"http://(?:www\.)?tvcatchup.com/watch/\w+")
 _stream_re = re.compile(r'''source.*?(?P<q>["'])(?P<stream_url>https?://.*m3u8\?.*clientKey=.*?)(?P=q)''')
 
@@ -31,7 +31,7 @@ class TVCatchup(Plugin):
         """
         Finds the streams from tvcatchup.com.
         """
-        http.headers.update({"User-Agent": USER_AGENT})
+        http.headers.update({"User-Agent": useragents.CHROME})
         res = http.get(self.url)
 
         match = _stream_re.search(res.text, re.IGNORECASE | re.MULTILINE)

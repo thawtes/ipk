@@ -7,6 +7,7 @@ import json
 
 from livecli.plugin import Plugin
 from livecli.plugin.api import http, validate
+from livecli.plugin.api import useragents
 from livecli.stream import (HTTPStream, HLSStream)
 
 __livecli_docs__ = {
@@ -20,7 +21,6 @@ __livecli_docs__ = {
     "last_update": "2017-01-06",
 }
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"
 HUAJIAO_URL = "http://www.huajiao.com/l/{}"
 LAPI_URL = "http://g2.live.360.cn/liveplay?stype=flv&channel={}&bid=huajiao&sn={}&sid={}&_rate=xd&ts={}&r={}&_ostype=flash&_delay=0&_sign=null&_ver=13"
 
@@ -54,7 +54,7 @@ class Huajiao(Plugin):
         match = _url_re.match(self.url)
         channel = match.group("channel")
 
-        http.headers.update({"User-Agent": USER_AGENT})
+        http.headers.update({"User-Agent": useragents.CHROME})
         http.verify = False
 
         feed_json = http.get(HUAJIAO_URL.format(channel), schema=_feed_json_schema)

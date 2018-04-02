@@ -5,6 +5,7 @@ from livecli.plugin import Plugin
 from livecli.plugin.api import http, useragents
 from livecli.stream import HDSStream
 from livecli.stream import HLSStream
+from livecli.utils import filter_urlquery
 
 __livecli_docs__ = {
     "domains": [
@@ -17,7 +18,7 @@ __livecli_docs__ = {
     "notes": "",
     "live": True,
     "vod": False,
-    "last_update": "2018-02-12",
+    "last_update": "2018-03-28",
 }
 
 
@@ -49,6 +50,9 @@ class TF1(Plugin):
         manifest_url = http.get(self.api_url.format(channel),
                                 params={"getURL": 1},
                                 headers={"User-Agent": useragents.FIREFOX}).text
+        self.logger.debug("OLD HDS URL: {0}".format(manifest_url))
+        manifest_url = filter_urlquery(manifest_url, ["hdnea"], True)
+        self.logger.debug("NEW HDS URL: {0}".format(manifest_url))
 
         for s in HDSStream.parse_manifest(self.session,
                                           manifest_url,
@@ -66,6 +70,9 @@ class TF1(Plugin):
         m = self.embed_re.search(embed_page.text)
         if m:
             hls_stream_url = m.group(1)
+            self.logger.debug("OLD HLS URL: {0}".format(hls_stream_url))
+            hls_stream_url = filter_urlquery(hls_stream_url, ["hdnea"], True)
+            self.logger.debug("NEW HLS URL: {0}".format(hls_stream_url))
 
             try:
                 for s in HLSStream.parse_variant_playlist(self.session, hls_stream_url).items():

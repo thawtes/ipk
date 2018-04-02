@@ -26,6 +26,10 @@ __livecli_docs__ = {
 }
 
 
+class UHSClientStatus:
+    pass
+
+
 class ModuleInfoNoStreams(Exception):
     pass
 
@@ -118,6 +122,18 @@ class UHSClient(object):
         return urljoin(host, "/1/ustream")
 
 
+class UStreamHLSStreamReader(HLSStreamReader):
+    def close(self):
+        self.worker.close()
+        self.writer.close()
+        UHSClientStatus.stop = True
+        for thread in (self.worker, self.writer):
+            if thread.is_alive():
+                thread.join()
+
+        self.buffer.close()
+
+
 class UStreamHLSStream(HLSStream):
     class APIPoller(Thread):
         """
@@ -131,10 +147,15 @@ class UStreamHLSStream(HLSStream):
             self.interval = interval
 
         def stop(self):
+            self.api.logger.debug("Stopped APIPoller")
             self.stopped.set()
 
         def run(self):
             while not self.stopped.wait(1.0):
+                if UHSClientStatus.stop is True:
+                    self.stop()
+                    break
+
                 res = self.api.poll(retries=30, timeout=self.interval)
                 if not res:
                     continue
@@ -150,7 +171,7 @@ class UStreamHLSStream(HLSStream):
         self.poller.setDaemon(True)
 
     def open(self):
-        reader = HLSStreamReader(self)
+        reader = UStreamHLSStreamReader(self)
         reader.open()
         self.poller.start()
         self.logger.debug("Starting API polling thread")
@@ -245,6 +266,7 @@ class UStreamTV(Plugin):
                                      retries=retries - 1)
 
     def _get_streams(self):
+        UHSClientStatus.stop = False
         # establish a mobile non-websockets api connection
         umatch = self.url_re.match(self.url)
         application = "channel"

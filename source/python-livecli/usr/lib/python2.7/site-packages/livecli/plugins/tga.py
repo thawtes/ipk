@@ -4,12 +4,14 @@ import re
 
 from livecli.plugin import Plugin
 from livecli.plugin.api import http, validate
-from livecli.stream import HLSStream, HTTPStream, RTMPStream
+from livecli.stream import HLSStream
+from livecli.stream import HTTPStream
+# from livecli.stream import RTMPStream
 
 __livecli_docs__ = {
     "domains": [
-        "star.longzhu.tv",
         "star.longzhu.com",
+        "y.longzhu.com",
     ],
     "geo_blocked": [],
     "notes": "",
@@ -22,7 +24,7 @@ CHANNEL_INFO_URL = "http://api.plu.cn/tga/streams/%s"
 QQ_STREAM_INFO_URL = "http://info.zb.qq.com/?cnlid=%d&cmd=2&stream=%d&system=1&sdtfrom=113"
 PLU_STREAM_INFO_URL = "http://livestream.plu.cn/live/getlivePlayurl?roomId=%d"
 _quality_re = re.compile(r"\d+x(\d+)$")
-_url_re = re.compile(r"http://star\.longzhu\.(?:tv|com)/(m\/)?(?P<domain>[a-z0-9]+)")
+_url_re = re.compile(r"https?://(?:(?:star|y)\.)longzhu\.com/(m\/)?(?P<domain>[a-z0-9]+)")
 
 _channel_schema = validate.Schema(
     {
@@ -106,11 +108,11 @@ class Tga(Plugin):
                 yield quality, HLSStream(self.session, source["securityUrl"])
             elif source["ext"] == "flv":
                 yield quality, HTTPStream(self.session, source["securityUrl"])
-            elif source["ext"] == "rtmp":
-                yield quality, RTMPStream(self.session, {
-                    "rtmp": source["securityUrl"],
-                    "live": True
-                })
+            # elif source["ext"] == "rtmp":
+            #    yield quality, RTMPStream(self.session, {
+            #        "rtmp": source["securityUrl"],
+            #        "live": True
+            #    })
 
     def _get_streams(self):
         match = _url_re.match(self.url)

@@ -93,7 +93,7 @@ class VaughnLive(Plugin):
 
     def _get_rtmp_streams(self, server, domain, channel, token):
         # rtmp_server = self.rtmp_server_map.get(server, server)
-        rtmp_server = "66.90.93.36:1935"
+        rtmp_server = "192.240.105.171:1935"
 
         url = "rtmp://{0}/live?{1}".format(rtmp_server, token)
 

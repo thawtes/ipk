@@ -63,8 +63,8 @@ def _filename_except(m, g):
         return None
 
 
-def get_id_for_filename(m, url):
-    """Find a usefull group item from _url_re"""
+def get_id_for_filename(m):
+    """Find a useful group item from _url_re"""
     filename = ""
     groups = [
         "username",

@@ -1,10 +1,10 @@
 import re
+from functools import partial
 
 from livecli.plugin import Plugin
 from livecli.plugin.api import http, validate
 from livecli.stream import HLSStream, HTTPStream, RTMPStream
 from livecli.utils import parse_json
-from livecli.plugins.common_jwplayer import _js_to_json
 
 __livecli_docs__ = {
     "domains": [
@@ -25,6 +25,9 @@ __livecli_docs__ = {
 
 
 class TV5Monde(Plugin):
+
+    _js_to_json = partial(re.compile(r"(\w+):\s").sub, r'"\1":')
+
     _url_re = re.compile(r'http://(.+\.)?(tv|tivi)5monde(plus(afrique)?)?\.com')
     _videos_re = re.compile(r'"?(?:files|sources)"?:\s*(?P<videos>\[.+?\])')
     _videos_embed_re = re.compile(r'(?:file:\s*|src=)"(?P<embed>.+?\.mp4|.+?/embed/.+?)"')
