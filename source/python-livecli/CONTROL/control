@@ -1,5 +1,5 @@
 Package: python-livecli
-Version: 3.7.0
+Version: 3.8.0
 Description: pipes videos from online streaming services to a variety of video players.
 Architecture: all
 Section: devel/python

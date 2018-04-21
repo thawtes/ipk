@@ -21,7 +21,7 @@ __livecli_docs__ = {
     "notes": "",
     "live": True,
     "vod": True,
-    "last_update": "2018-02-12",
+    "last_update": "2018-04-11",
 }
 
 
@@ -66,6 +66,8 @@ class Zattoo(Plugin):
         validate.get('channel_groups'),
     )
 
+    expires_time = 3600 * 24
+
     options = PluginOptions({
         'email': None,
         'password': None,
@@ -77,7 +79,7 @@ class Zattoo(Plugin):
         self._session_attributes = Cache(filename='plugin-cache.json', key_prefix='zattoo:attributes')
         self._authed = self._session_attributes.get('beaker.session.id') and self._session_attributes.get('pzuid') and self._session_attributes.get('power_guide_hash')
         self._uuid = self._session_attributes.get('uuid')
-        self._expires = self._session_attributes.get('expires', 946684800)
+        self._expires = self._session_attributes.get('expires', time.time() + self.expires_time)
 
         self.base_url = 'https://{0}'.format(Zattoo._url_re.match(url).group('base_url'))
         self.headers = {
@@ -90,6 +92,10 @@ class Zattoo(Plugin):
     @classmethod
     def can_handle_url(cls, url):
         return Zattoo._url_re.match(url)
+
+    def set_expires_time_cache(self):
+        expires = time.time() + self.expires_time
+        self._session_attributes.set('expires', expires, expires=self.expires_time)
 
     def _hello(self):
         self.logger.debug('_hello ...')
@@ -138,6 +144,7 @@ class Zattoo(Plugin):
             self._session_attributes.set('beaker.session.id', res.cookies.get('beaker.session.id'), expires=3600 * 24)
             self._session_attributes.set('pzuid', res.cookies.get('pzuid'), expires=3600 * 24)
             self._session_attributes.set('power_guide_hash', data['session']['power_guide_hash'], expires=3600 * 24)
+            self.set_expires_time_cache()
             return self._authed
         else:
             return None
@@ -262,8 +269,7 @@ class Zattoo(Plugin):
         if self._authed:
             if self._expires < time.time():
                 # login after 24h
-                expires = time.time() + 3600 * 24
-                self._session_attributes.set('expires', expires, expires=3600 * 24)
+                self.set_expires_time_cache()
                 self._authed = False
 
         if not self._authed:

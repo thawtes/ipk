@@ -438,8 +438,8 @@ class Resolve(Plugin):
         """
         new_session_url = False
 
-        self.logger.debug("start resolve.py ...")
         self.url = update_scheme("http://", self.url)
+        self.logger.debug("resolve.py - {0}".format(self.url))
 
         # GET website content
         o_res = self._res_text(self.url)

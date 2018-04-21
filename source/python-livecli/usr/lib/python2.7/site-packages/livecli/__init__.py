@@ -9,8 +9,6 @@ An API is also provided that allows direct access to stream data.
 Full documentation is available at https://livecli.github.io.
 
 """
-import warnings
-from sys import version_info
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
@@ -32,18 +30,17 @@ from livecli.exceptions import (
 from livecli.session import Livecli  # noqa
 
 __all__ = [
-    "warnings",
-    "version_info",
-    "__title__",
-    "__license__",
     "__author__",
     "__copyright__",
     "__credits__",
-    "streams",
+    "__license__",
+    "__title__",
+    "__version__",
+    "Livecli",
     "LivecliError",
     "NoPluginError",
     "NoStreamsError",
     "PluginError",
     "StreamError",
-    "Livecli",
+    "streams",
 ]

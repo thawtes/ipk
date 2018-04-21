@@ -43,8 +43,8 @@ opkg install /tmp/python-socks_1.6.8_all.ipk
 wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-websocket_0.47.0_all.ipk
 opkg install /tmp/python-websocket_0.47.0_all.ipk
 
-wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-livecli_3.7.0_all.ipk
-opkg install /tmp/python-livecli_3.7.0_all.ipk
+wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-livecli_3.8.0_all.ipk
+opkg install /tmp/python-livecli_3.8.0_all.ipk
 ```
 
 _test livecli_

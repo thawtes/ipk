@@ -6,6 +6,19 @@ from livecli.plugin.api import http, useragents, validate
 from livecli.stream import HLSStream
 from livecli.utils import parse_json, update_scheme
 
+__livecli_docs__ = {
+    "domains": [
+        "idf1.fr",
+    ],
+    "geo_blocked": [
+        "FR",
+    ],
+    "notes": "",
+    "live": True,
+    "vod": False,
+    "last_update": "2018-02-27",
+}
+
 
 class IDF1(Plugin):
     DACAST_API_URL = 'https://json.dacast.com/b/{}/{}/{}'

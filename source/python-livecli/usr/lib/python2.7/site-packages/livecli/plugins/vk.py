@@ -13,15 +13,15 @@ __livecli_docs__ = {
     "notes": "",
     "live": True,
     "vod": True,
-    "last_update": "2018-03-29",
+    "last_update": "2018-04-14",
 }
 
 
 class VK(Plugin):
     _url_re = re.compile(r"http(?:s)?://(\w+\.)?vk\.com/video-?[0-9]*_[0-9]*")
     _url_catalog_re = re.compile(r"http(?:s)?://(\w+\.)?vk\.com/videos-?[0-9]*")
-    _livestream_sources_re = re.compile(r"<source src=\\\"(.*?)\\\" type=\\\"application\\\/vnd\.apple\.mpegurl\\\">")
-    _vod_sources_re = re.compile(r"<source src=\\\"(.*?)\\\" type=\\\"video\\\/mp4\\\">")
+    _livestream_sources_re = re.compile(r"""<source src=\\["']((?!https?:\\/\\/vk\.com\\/video_hls\.php)[^"']+?)\\["']\stype=\\["']application\\/vnd\.apple\.mpegurl\\["']""")
+    _vod_sources_re = re.compile(r"""<source src=\\["']([^"']+?)\\["']\stype=\\["']video\\\/mp4\\["']""")
     _vod_quality_re = re.compile(r"\.([0-9]*?)\.mp4")
 
     @classmethod
