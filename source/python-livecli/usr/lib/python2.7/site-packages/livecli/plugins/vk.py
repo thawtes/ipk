@@ -64,7 +64,7 @@ class VK(Plugin):
         # Try and find an HLS source (livestream)
         stream_urls = self._livestream_sources_re.findall(res.text)
         if len(stream_urls):
-            stream_url = stream_urls[0].replace('\/', '/')
+            stream_url = stream_urls[0].replace(r'\/', '/')
             self.logger.debug("Found live stream at {}", stream_url)
             try:
                 # try to parse the stream as a variant playlist
@@ -82,7 +82,7 @@ class VK(Plugin):
         # Try and find a set of MP4 sources (VOD)
         vod_urls = self._vod_sources_re.findall(res.text)
         if len(vod_urls):
-            vod_urls = [v.replace('\/', '/') for v in vod_urls]
+            vod_urls = [v.replace(r'\/', '/') for v in vod_urls]
             # Try to get quality from URL
             qualities = {}
             for s in vod_urls:

@@ -154,8 +154,8 @@ class Rtve(Plugin):
                             streams.extend(HLSStream.parse_variant_playlist(self.session, url).items())
                         except (IOError, OSError):
                             self.logger.debug("Failed to load m3u8 url: {0}", url)
-                    elif ((url.endswith("mp4") or url.endswith("mov") or url.endswith("avi")) and
-                            http.head(url, raise_for_status=False).status_code == 200):
+                    elif ((url.endswith("mp4") or url.endswith("mov") or url.endswith("avi"))
+                            and http.head(url, raise_for_status=False).status_code == 200):
                         if quality_map is None:  # only make the request when it is necessary
                             quality_map = self._get_quality_map(content_id)
                         # rename the HTTP sources to match the HLS sources

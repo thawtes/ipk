@@ -89,8 +89,8 @@ class MyFreeCams(Plugin):
             raise NoStreamsError(self.url)
 
         _data_php_re = re.compile(
-            r"""\[["'](?P<username>{0})["'],(?P<sid>\d+),""".format(_username_php_re) +
-            r"""(?P<uid>{0}),(?P<vs>\d+),[^,]+,[^,]+,(?P<camserv>\d+)[^\]]+\]""".format(_uid_php_re))
+            r"""\[["'](?P<username>{0})["'],(?P<sid>\d+),""".format(_username_php_re)
+            + r"""(?P<uid>{0}),(?P<vs>\d+),[^,]+,[^,]+,(?P<camserv>\d+)[^\]]+\]""".format(_uid_php_re))
 
         match = _data_php_re.search(res.text)
         if match is None:

@@ -1,6 +1,7 @@
 # coding=utf-8
 import re
 import warnings
+from base64 import b64decode
 from random import random
 
 import requests
@@ -43,7 +44,7 @@ QUALITY_WEIGHTS = {
 }
 
 
-TWITCH_CLIENT_ID = "pwkzresl8kj2rdj6g7bvxl9ys1wly3j"
+TWITCH_CLIENT_ID = b64decode("Z3FsN2UzNmVrN2d3YTBmNGFuOXdzd3IweXR4OTRr").decode("UTF-8")
 
 _url_re = re.compile(r"""
     http(s)?://

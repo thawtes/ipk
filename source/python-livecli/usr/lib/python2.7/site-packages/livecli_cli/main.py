@@ -1048,6 +1048,19 @@ def setup_plugin_options():
         livecli.set_plugin_option("abweb", "purge_credentials",
                                   args.abweb_purge_credentials)
 
+    if args.fc2_username:
+        livecli.set_plugin_option("fc2", "username", args.fc2_username)
+    if args.fc2_username and not args.fc2_password:
+        fc2_password = console.askpass("Enter fc2 password: ")
+    else:
+        fc2_password = args.fc2_password
+    if fc2_password:
+        livecli.set_plugin_option("fc2", "password", fc2_password)
+
+    if args.fc2_purge_credentials:
+        livecli.set_plugin_option("fc2", "purge_credentials",
+                                  args.fc2_purge_credentials)
+
     if args.resolve_turn_off:
         livecli.set_plugin_option("resolve", "turn_off",
                                   args.resolve_turn_off)

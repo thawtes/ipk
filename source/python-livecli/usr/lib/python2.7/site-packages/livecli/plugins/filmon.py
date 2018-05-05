@@ -4,7 +4,9 @@ import time
 
 from livecli import StreamError
 from livecli.plugin import Plugin
-from livecli.plugin.api import http, validate
+from livecli.plugin.api import http
+from livecli.plugin.api import useragents
+from livecli.plugin.api import validate
 from livecli.stream import HLSStream
 
 __livecli_docs__ = {
@@ -15,7 +17,7 @@ __livecli_docs__ = {
     "notes": "",
     "live": True,
     "vod": True,
-    "last_update": "2017-02-10",
+    "last_update": "2018-04-24",
 }
 
 
@@ -68,8 +70,8 @@ class FilmOnHLS(HLSStream):
 
 
 class FilmOnAPI(object):
-    channel_url = "http://www.filmon.com/api-v2/channel/{0}?protocol=hls"
-    vod_url = "http://www.filmon.com/vod/info/{0}"
+    channel_url = "https://www.filmon.com/api-v2/channel/{0}?protocol=hls"
+    vod_url = "https://www.filmon.com/vod/info/{0}"
 
     stream_schema = {
         "quality": validate.text,
@@ -106,7 +108,7 @@ class Filmon(Plugin):
         )
     """, re.VERBOSE)
 
-    _channel_id_re = re.compile(r'channel_id\s*?=\s*"(\d+)"')
+    _channel_id_re = re.compile(r'''channel_id\s*?=\s*["']?(\d+)["']''')
     _channel_id_schema = validate.Schema(
         validate.transform(_channel_id_re.search),
         validate.any(None, validate.get(1))
@@ -136,17 +138,22 @@ class Filmon(Plugin):
     def _get_streams(self):
         url_m = self.url_re.match(self.url)
 
-        channel = url_m and url_m.group("channel")
         vod_id = url_m and url_m.group("vod_id")
 
         if vod_id:
+            self.logger.debug("vod_id: {0}".format(vod_id))
             data = self.api.vod(vod_id)
             for _, stream in data["streams"].items():
                 yield stream["quality"], FilmOnHLS(self.session, vod_id=vod_id, quality=stream["quality"])
 
         else:
-            if not channel:
-                channel = http.get(self.url, schema=self._channel_id_schema)
+            channel = http.get(self.url, schema=self._channel_id_schema)
+            if channel:
+                self.logger.debug("channel_id: {0}".format(channel))
+            else:
+                channel = url_m and url_m.group("channel")
+                self.logger.debug("channel: {0}".format(channel))
+
             data = self.api.channel(channel)
             for stream in data["streams"]:
                 yield stream["quality"], FilmOnHLS(self.session, channel=channel, quality=stream["quality"])

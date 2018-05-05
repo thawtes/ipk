@@ -278,19 +278,19 @@ class Resolve(Plugin):
 
             for url_status in ((new_url in ResolveCache.cache_url_list),
                                (not parse_new_url.scheme.startswith(("http"))),
-                               (url_type == "iframe" and
-                                whitelist_netloc_user is not None and
-                                parse_new_url.netloc.endswith(tuple(whitelist_netloc_user)) is False),
-                               (url_type == "iframe" and
-                                whitelist_path_user is not None and
-                                self.compare_url_path(parse_new_url, whitelist_path) is False),
+                               (url_type == "iframe"
+                                and whitelist_netloc_user is not None
+                                and parse_new_url.netloc.endswith(tuple(whitelist_netloc_user)) is False),
+                               (url_type == "iframe"
+                                and whitelist_path_user is not None
+                                and self.compare_url_path(parse_new_url, whitelist_path) is False),
                                (parse_new_url.netloc.endswith(self.blacklist_netloc)),
-                               (blacklist_netloc_user is not None and
-                                parse_new_url.netloc.endswith(tuple(blacklist_netloc_user))),
+                               (blacklist_netloc_user is not None
+                                and parse_new_url.netloc.endswith(tuple(blacklist_netloc_user))),
                                (self.compare_url_path(parse_new_url, self.blacklist_path) is True),
                                (parse_new_url.path.endswith(self.blacklist_endswith)),
-                               ((url_type == "playlist" and
-                                 not parse_new_url.path.endswith(self.whitelist_endswith))),
+                               ((url_type == "playlist"
+                                 and not parse_new_url.path.endswith(self.whitelist_endswith))),
                                (self._ads_path.match(parse_new_url.path))):
 
                 count += 1

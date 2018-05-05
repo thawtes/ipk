@@ -1,8 +1,9 @@
-from __future__ import print_function
 import re
 
+from livecli import PluginError
 from livecli.plugin import Plugin
 from livecli.plugin.api import http
+from livecli.plugin.api import useragents
 from livecli.plugin.api import validate
 from livecli.stream import HLSStream
 
@@ -16,7 +17,7 @@ __livecli_docs__ = {
     "notes": "",
     "live": True,
     "vod": False,
-    "last_update": "2017-01-08",
+    "last_update": "2018-04-30",
 }
 
 
@@ -38,11 +39,17 @@ class RaiPlay(Plugin):
         return cls.url_re.match(url) is not None
 
     def _get_streams(self):
+        http.headers.update({"User-Agent": useragents.FIREFOX})
         channel = self.url_re.match(self.url).group(1)
         self.logger.debug("Found channel: {0}", channel)
         stream_url = http.get(self.url, schema=self.stream_schema)
         if stream_url:
-            return HLSStream.parse_variant_playlist(self.session, stream_url)
+            try:
+                return HLSStream.parse_variant_playlist(self.session, stream_url)
+            except Exception as e:
+                if "Missing #EXTM3U header" in str(e):
+                    raise PluginError("The streaming of this content is available in Italy only.")
+                raise e
 
 
 __plugin__ = RaiPlay

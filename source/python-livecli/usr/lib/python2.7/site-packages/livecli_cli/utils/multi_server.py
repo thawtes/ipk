@@ -153,11 +153,11 @@ def _play_stream(HTTPBase, redirect=False):
         return
 
     # set quality
-    quality = (data_other.get("q") or
-               data_other.get("quality") or
-               data_other.get("stream") or
-               data_other.get("default-stream") or
-               ["best"])
+    quality = (data_other.get("q")
+               or data_other.get("quality")
+               or data_other.get("stream")
+               or data_other.get("default-stream")
+               or ["best"])
 
     stream_name = "best"
 
