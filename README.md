@@ -43,8 +43,8 @@ opkg install /tmp/python-socks_1.6.8_all.ipk
 wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-websocket_0.47.0_all.ipk
 opkg install /tmp/python-websocket_0.47.0_all.ipk
 
-wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-livecli_3.8.0_all.ipk
-opkg install /tmp/python-livecli_3.8.0_all.ipk
+wget https://raw.githubusercontent.com/livecli/ipk/master/build/python-livecli_3.9.0_all.ipk
+opkg install /tmp/python-livecli_3.9.0_all.ipk
 ```
 
 _test livecli_
@@ -153,7 +153,7 @@ Example for python-iso3166
 
 ```sh
 $ cd build
-$ ../source/ipkg-build ../source/python-iso3166/
+$ ../source/ipkg-build ../source/python-livecli/
 sha256sum *.ipk > sha256sum.txt
 sha256sum -c sha256sum.txt
 ```
