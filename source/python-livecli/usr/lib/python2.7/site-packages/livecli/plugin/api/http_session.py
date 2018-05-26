@@ -3,6 +3,7 @@ from requests import Session, __build__ as requests_version
 from requests.adapters import HTTPAdapter
 
 from livecli.packages.requests_file import FileAdapter
+from livecli.plugin.api import useragents
 
 try:
     from requests.packages.urllib3.util import Timeout
@@ -64,6 +65,7 @@ class HTTPSession(Session):
         Session.__init__(self, *args, **kwargs)
 
         self.timeout = 20.0
+        self.headers.update({'User-Agent': useragents.FIREFOX})
 
         if TIMEOUT_ADAPTER_NEEDED:
             self.mount("http://", HTTPAdapterWithReadTimeout())

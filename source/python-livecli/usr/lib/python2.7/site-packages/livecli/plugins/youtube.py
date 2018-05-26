@@ -3,6 +3,7 @@ import re
 from livecli.compat import urlparse, parse_qsl
 from livecli.plugin import Plugin, PluginError
 from livecli.plugin.api import http, validate
+from livecli.plugin.api import useragents
 from livecli.plugin.api.utils import parse_query
 from livecli.stream import HTTPStream, HLSStream
 from livecli.stream.ffmpegmux import MuxedStream
@@ -23,11 +24,9 @@ __livecli_docs__ = {
 
 API_KEY = "AIzaSyBDBi-4roGzWJN4du9TuDMLd_jVTcVkKz4"
 API_BASE = "https://www.googleapis.com/youtube/v3"
+API_CHANNELS_URL = API_BASE + "/channels"
 API_SEARCH_URL = API_BASE + "/search"
 API_VIDEO_INFO = "https://youtube.com/get_video_info"
-HLS_HEADERS = {
-    "User-Agent": "Mozilla/5.0"
-}
 
 
 def parse_stream_map(stream_map):
@@ -110,6 +109,8 @@ _search_schema = validate.Schema(
 )
 
 _channelid_re = re.compile(r'meta itemprop="channelId" content="([^"]+)"')
+_channelid_2_re = re.compile(r'meta property="og:url" content="https://www.youtube.com/channel/([^"]+)"')
+_channelid_3_re = re.compile(r'link rel="canonical" href="https://www.youtube.com/channel/([^"]+)"')
 _livechannelid_re = re.compile(r'meta property="og:video:url" content="([^"]+)')
 _url_re = re.compile(r"""
     https?://
@@ -222,15 +223,44 @@ class YouTube(Plugin):
 
         return streams, protected
 
-    def _find_channel_video(self):
-        res = http.get(self.url)
-        match = _channelid_re.search(res.text)
-        if not match:
-            return
+    def _find_channel_from_api(self, user):
+        self.logger.debug("_find_channel_from_api")
+        params = {
+            "key": API_KEY,
+            "forUsername": user,
+            "part": "id",
+        }
+        res = http.get(API_CHANNELS_URL, params=params)
+        res = http.json(res)
 
-        channel_id = match.group(1)
-        self.logger.debug("Found channel_id: {0}".format(channel_id))
-        return self._get_channel_video(channel_id)
+        if res["items"]:
+            return res["items"][0]["id"]
+        return False
+
+    def _find_channel_from_web(self):
+        self.logger.debug("_find_channel_from_web")
+        res = http.get(self.url)
+        count = 0
+        for __re in (_channelid_re, _channelid_2_re, _channelid_3_re):
+            count += 1
+            match = __re.search(res.text)
+            if match:
+                self.logger.debug("Found on __re {0}".format(count))
+                break
+
+        if match:
+            return match.group(1)
+        return False
+
+    def _find_channel_video(self, user):
+        channel_id = (self._find_channel_from_api(user)
+                      or self._find_channel_from_web())
+
+        if channel_id:
+            self.logger.debug("Found channel_id: {0}".format(channel_id))
+            return self._get_channel_video(channel_id)
+
+        self.logger.error("Missing channel_id")
 
     def _get_channel_video(self, channel_id):
         query = {
@@ -262,7 +292,7 @@ class YouTube(Plugin):
         live_channel = match.group("liveChannel")
 
         if user:
-            video_id = self._find_channel_video()
+            video_id = self._find_channel_video(user)
         elif live_channel:
             return self._find_canonical_stream_info()
         else:
@@ -288,7 +318,7 @@ class YouTube(Plugin):
             params = {"video_id": video_id}
             params.update(_params)
 
-            res = http.get(API_VIDEO_INFO, params=params, headers=HLS_HEADERS)
+            res = http.get(API_VIDEO_INFO, params=params)
             info_parsed = parse_query(res.text, name="config", schema=_config_schema)
             if info_parsed.get("status") == "fail":
                 self.logger.debug("get_video_info - {0}: {1}".format(
@@ -302,6 +332,8 @@ class YouTube(Plugin):
         return info_parsed
 
     def _get_streams(self):
+        http.headers.update({'User-Agent': useragents.CHROME})
+
         is_live = False
 
         info = self._get_stream_info(self.url)
@@ -341,7 +373,7 @@ class YouTube(Plugin):
 
             try:
                 hls_streams = HLSStream.parse_variant_playlist(
-                    self.session, hls_playlist, headers=HLS_HEADERS, namekey="pixels"
+                    self.session, hls_playlist, namekey="pixels"
                 )
                 streams.update(hls_streams)
             except IOError as err:

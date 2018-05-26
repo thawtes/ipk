@@ -5,7 +5,6 @@ import time
 from livecli import StreamError
 from livecli.plugin import Plugin
 from livecli.plugin.api import http
-from livecli.plugin.api import useragents
 from livecli.plugin.api import validate
 from livecli.stream import HLSStream
 
