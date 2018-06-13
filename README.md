@@ -2,12 +2,16 @@
 
 Livecli repacked as ipkg for E2 receiver.
 
-- source: https://github.com/livecli/ipk
-- livecli: https://github.com/livecli/livecli
+- source: https://github.com/back-to/ipk
+- liveproxy: https://github.com/back-to/liveproxy
+- streamlink: https://github.com/streamlink/streamlink
 
 # GUIDE
 
-The Guide has moved to https://livecli.github.io/latest/app_e2.html
+A Guide can be found at
+
+- https://liveproxy.github.io/
+- https://liveproxy.github.io/install.html#enigma2
 
 # HELPER
 
