@@ -1,0 +1,12 @@
+Package: python-liveproxy
+Version: 0.0.1
+Description: LiveProxy is a local Proxyserver between Streamlink and an URL.
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core, python-streamlink
+OE: python-liveproxy
+License: BSD 2-Clause Simplified License
+Maintainer: back-to
+Homepage: https://github.com/back-to/ipk
+Source: https://github.com/back-to/liveproxy

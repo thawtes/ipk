@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: liveproxy
+Version: 0.0.1
+Summary: LiveProxy is a local Proxyserver between Streamlink and an URL.
+Home-page: https://github.com/back-to/liveproxy
+Author: back-to
+Author-email: backto@protonmail.ch
+License: BSD 2-Clause "Simplified" License
+Project-URL: Documentation, https://liveproxy.github.io/
+Project-URL: Source, https://github.com/back-to/liveproxy/
+Project-URL: Tracker, https://github.com/back-to/liveproxy/issues
+Keywords: LiveProxy Streamlink Livecli Livestreamer IPTV TV
+Platform: UNKNOWN
+Classifier: Development Status :: 1 - Planning
+Classifier: Environment :: Console
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Multimedia :: Sound/Audio
+Classifier: Topic :: Multimedia :: Video
+Classifier: Topic :: Utilities
+Requires-Python: >=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4
+Description-Content-Type: text/markdown
+Requires-Dist: streamlink (<1,>=0.13.0)
+
+
+# LiveProxy
+
+[![Build Status](https://travis-ci.org/back-to/liveproxy.svg?branch=master)](https://travis-ci.org/back-to/liveproxy)
+
+LiveProxy is a local Proxyserver between Streamlink and an URL.
+
+### WARNING
+    LiveProxy is not supposed to run on remote servers,
+    it is only meant for a local network.
+
+- Issue Tracker: https://github.com/back-to/liveproxy/issues
+- Github: https://github.com/back-to/liveproxy
+- Kodi-Repo: https://github.com/back-to/repo
+- Kodi-Repo-Zip: https://github.com/back-to/repo/raw/master/repository.back-to/repository.back-to-5.0.0.zip
+- Enigma2: https://github.com/back-to/ipk
+
+# Streamlink plugins
+
+- Custom plugins issue tracker: https://github.com/back-to/plugins/issues
+- Default plugins issue tracker: https://github.com/streamlink/streamlink/issues
+
+# Guide
+
+- https://liveproxy.github.io/
+
+# Install
+
+- https://liveproxy.github.io/install.html
+
+
