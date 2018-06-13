@@ -1,6 +1,6 @@
 # IPK
 
-Livecli repacked as ipkg for E2 receiver.
+LiveProxy / Streamlink repacked as ipkg for E2 receiver.
 
 - source: https://github.com/back-to/ipk
 - liveproxy: https://github.com/back-to/liveproxy
