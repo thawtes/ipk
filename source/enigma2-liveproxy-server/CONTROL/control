@@ -1,0 +1,12 @@
+Package: enigma2-liveproxy-server
+Version: 1.0.0
+Description: startup service for python-liveproxy
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core, python-liveproxy
+OE: enigma2-liveproxy-server
+License: BSD 2-Clause Simplified License
+Maintainer: back-to
+Homepage: https://github.com/back-to/ipk
+Source: https://github.com/back-to/ipk
