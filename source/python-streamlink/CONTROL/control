@@ -1,0 +1,12 @@
+Package: python-streamlink
+Version: 0.13.0.18
+Description: CLI for extracting streams from various websites to a video player of your choosing
+Architecture: all
+Section: devel/python
+Priority: optional
+Depends: python-core, python-backports.shutil-get-terminal-size, python-backports.shutil-which, python-futures, python-iso3166, python-iso639, python-pycrypto, python-requests, python-singledispatch, python-socks, python-websocket, python-isodate
+OE: python-streamlink
+License: BSD 2-Clause Simplified License
+Maintainer: streamlink
+Homepage: https://github.com/back-to/ipk
+Source: https://github.com/streamlink/streamlink
