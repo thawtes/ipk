@@ -1,5 +1,5 @@
 Package: python-liveproxy
-Version: 0.0.1
+Version: 0.0.2
 Description: LiveProxy is a local Proxyserver between Streamlink and an URL.
 Architecture: all
 Section: devel/python
